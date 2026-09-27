@@ -87,10 +87,6 @@ const QUOTES: Quote[] = [
 ]
 
 export const generateRandomQuote = (): Quote => {
-  if (Math.random() < 0.5) {
-    throw new Error('Simulated quote generator crash')
-  }
-
   const randomIndex = Math.floor(Math.random() * QUOTES.length)
   return QUOTES[randomIndex]
 }
