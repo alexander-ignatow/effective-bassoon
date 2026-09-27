@@ -2,6 +2,7 @@ import request from 'supertest'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import app from '../index'
+import * as quoteGenerator from '../services/quoteGenerator'
 
 describe('quote endpoints', () => {
   afterEach((): void => {
@@ -32,7 +33,9 @@ describe('quote endpoints', () => {
   })
 
   it('returns a generic 500 when quote generation crashes', async () => {
-    vi.spyOn(Math, 'random').mockReturnValue(0.25)
+    vi.spyOn(quoteGenerator, 'generateRandomQuote').mockImplementation(() => {
+      throw new Error('quote generation failed')
+    })
 
     const response = await request(app)
       .get('/quote')
